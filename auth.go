@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -94,7 +95,7 @@ func Auth(user, password string) (sess *Session, err error) {
 		return nil, errors.New("failed to login: " + err.Error())
 	}
 
-	if postRes.Request.URL.Path == "/" {
+	if postRes.Request.URL.Path == "/" || strings.Contains(postRes.Request.URL.Path, "/t") {
 		return sessionForHomepage(client, postRes.Body)
 	}
 
